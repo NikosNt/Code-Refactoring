@@ -1,10 +1,11 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import AceEditor from "react-ace";
-import { Button } from "react-bootstrap";
+import {Button, Col, Row} from "react-bootstrap";
 
+import "ace-builds/webpack-resolver";
 import "ace-builds/src-noconflict/mode-javascript";
-import "ace-builds/src-noconflict/theme-cobalt";
-import "bootstrap/dist/css/bootstrap.min.css";
+import "ace-builds/src-noconflict/theme-terminal";
+import 'ace-builds/src-noconflict/ext-searchbox';
 
 export class app extends Component {
   constructor(props) {
@@ -13,26 +14,35 @@ export class app extends Component {
       data: ""
     };
   }
+
   onChange(newValue) {
     console.log(newValue);
+    // this.setState(prevState => ({
+    //   data: newValue
+    // }))
   }
+
   sendData() {
-    console.log(this.state);
   }
+
   render() {
     return (
-      <div>
-        <AceEditor
-          mode="javascript"
-          theme="cobalt"
-          onChange={this.onChange.bind(this)}
-          name="UNIQUE_ID_OF_DIV"
-          editorProps={{ $blockScrolling: true }}
-        />
-        <Button variant={"outline-primary"} size={"sm"}>
-          Click
-        </Button>
-      </div>
+      <Row>
+        <Col>
+          <AceEditor
+            mode="javascript"
+            theme="terminal"
+            onChange={this.onChange.bind(this)}
+            name="UNIQUE_ID_OF_DIV"
+            editorProps={{$blockScrolling: true}}
+          />
+        </Col>
+        <Col>
+          <Button variant={"outline-primary"} onClick={this.sendData.bind(this)} size={"sm"}>
+            Click
+          </Button>
+        </Col>
+      </Row>
     );
   }
 }
