@@ -22,7 +22,7 @@ class app extends Component {
   onChange(newValue) {
     this.data = newValue;
   }
-
+//test
   sendData() {
     let source = this.data;
     let options = {
