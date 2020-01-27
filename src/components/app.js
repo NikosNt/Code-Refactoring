@@ -1,8 +1,8 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import AceEditor from "react-ace";
-import { Button, Col, Row } from "react-bootstrap";
+import {Button, Col, Row} from "react-bootstrap";
 
-import { JSHINT } from "jshint";
+import {JSHINT} from "jshint";
 
 import "ace-builds/webpack-resolver";
 import "ace-builds/src-noconflict/mode-javascript";
@@ -13,56 +13,56 @@ class app extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      data: ""
+      auth: false
     };
     this.data = "";
+    this.results = {}
   }
 
   onChange(newValue) {
-    // console.log(newValue);
     this.data = newValue;
-    // this.setState(prevState => ({
-    //   data: newValue
-    // }))
   }
 
   sendData() {
-    var source = this.data;
-    var options = {
+    let source = this.data;
+    let options = {
       undef: true,
+      unused: true,
       esversion: 7
     };
-    var predef = {
-      foo: false
-    };
+    let predef = {};
 
     JSHINT(source, options, predef);
-
+    this.results = JSON.stringify(JSHINT.data());
     console.log(JSHINT.data());
+    this.setState({auth: true});
   }
 
   render() {
     return (
       <Row>
         <Col>
+
+        </Col>
+        <Col>
           <AceEditor
             mode="javascript"
             theme="monokai"
             onChange={this.onChange.bind(this)}
             name="UNIQUE_ID_OF_DIV"
-            editorProps={{ $blockScrolling: true }}
+            editorProps={{$blockScrolling: true}}
           />
         </Col>
         <Col>
-          <Button
-            variant={"outline-primary"}
-            onClick={this.sendData.bind(this)}
-            size={"sm"}
-          >
+          <Button variant={"outline-primary"} onClick={this.sendData.bind(this)} size={"sm"}>
             Click
           </Button>
         </Col>
-        <Col>{}</Col>
+        <Col className={"alert-primary"}>
+          {this.state.auth === true ? (
+            this.results
+          ) : null}
+        </Col>
       </Row>
     );
   }
