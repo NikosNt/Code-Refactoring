@@ -1,37 +1,69 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import AceEditor from "react-ace";
+import {Button, Col, Row} from "react-bootstrap";
 
-import "ace-builds/src-noconflict/mode-java";
-import "ace-builds/src-noconflict/theme-cobalt";
+import {JSHINT} from "jshint";
 
-export class app extends Component {
-  constructor() {
-    super();
+import "ace-builds/webpack-resolver";
+import "ace-builds/src-noconflict/mode-javascript";
+import "ace-builds/src-noconflict/theme-monokai";
+import "ace-builds/src-noconflict/ext-searchbox";
+
+class app extends Component {
+  constructor(props) {
+    super(props);
     this.state = {
-      data: ""
+      auth: false
     };
+    this.data = "";
+    this.results = {}
   }
-  //uiuih
+
   onChange(newValue) {
-    console.log("change", newValue);
-    // this.setState({
-    //   data: newValue
-    // })
+    this.data = newValue;
   }
+
   sendData() {
-    console.log(this.state);
+    let source = this.data;
+    let options = {
+      undef: true,
+      unused: true,
+      esversion: 7
+    };
+    let predef = {};
+
+    JSHINT(source, options, predef);
+    this.results = JSON.stringify(JSHINT.data());
+    console.log(JSHINT.data());
+    this.setState({auth: true});
   }
+
   render() {
     return (
-      <div>
-        <AceEditor
-          mode="java"
-          theme="cobalt"
-          onChange={this.onChange.bind(this)}
-          name="UNIQUE_ID_OF_DIV"
-          editorProps={{ $blockScrolling: true }}
-        />
-      </div>
+      <Row>
+        <Col>
+
+        </Col>
+        <Col>
+          <AceEditor
+            mode="javascript"
+            theme="monokai"
+            onChange={this.onChange.bind(this)}
+            name="UNIQUE_ID_OF_DIV"
+            editorProps={{$blockScrolling: true}}
+          />
+        </Col>
+        <Col>
+          <Button variant={"outline-primary"} onClick={this.sendData.bind(this)} size={"sm"}>
+            Click
+          </Button>
+        </Col>
+        <Col className={"alert-primary"}>
+          {this.state.auth === true ? (
+            this.results
+          ) : null}
+        </Col>
+      </Row>
     );
   }
 }
