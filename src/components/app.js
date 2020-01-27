@@ -34,22 +34,19 @@ class app extends Component {
       undef: true,
       unused: true,
       strict: true,
-      varstmt: true,
+      varstmt: true
     };
     let predef = {};
 
     JSHINT(source, options, predef);
-    this.results = JSON.stringify(JSHINT.data());
-    console.log(JSHINT.data());
+    this.results = JSHINT.data();
+    console.log(this.results.errors);
     this.setState({auth: true});
   }
 
   render() {
     return (
       <Row>
-        <Col>
-
-        </Col>
         <Col>
           <AceEditor
             mode="javascript"
@@ -66,7 +63,13 @@ class app extends Component {
         </Col>
         <Col className={"alert-primary"}>
           {this.state.auth === true ? (
-            this.results
+            <div>
+              {`${this.results.errors.length} Errors`}
+              {this.results.errors.map(el => {
+                return <p>Line:{el.line} Error:{el.reason}</p>
+              })
+              }
+            </div>
           ) : null}
         </Col>
       </Row>
