@@ -26,9 +26,15 @@ class app extends Component {
   sendData() {
     let source = this.data;
     let options = {
+      esversion: 7,
+      eqeqeq: true,
+      maxdepth: 4,
+      maxcomplexity: 3,
+      maxparams: 3,
       undef: true,
       unused: true,
-      esversion: 7
+      strict: true,
+      varstmt: true,
     };
     let predef = {};
 
