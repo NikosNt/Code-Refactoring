@@ -1,26 +1,25 @@
-import React, {Component} from "react";
+import React, {Component} from 'react';
 import AceEditor from "react-ace";
-import {Button, Col, Row} from "react-bootstrap";
-
 import {JSHINT} from "jshint";
+import {Col, Row} from "react-bootstrap";
 
 import "ace-builds/webpack-resolver";
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-monokai";
 import "ace-builds/src-noconflict/ext-searchbox";
 
-class app extends Component {
+class Editor extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      auth: false
-    };
+    this.textInput = React.createRef();
+    this.resultInput = React.createRef();
     this.data = "";
-    this.results = {}
+    this.results = {};
   }
 
   onChange(newValue) {
     this.data = newValue;
+    this.sendData();
   }
 
   sendData() {
@@ -40,15 +39,26 @@ class app extends Component {
 
     JSHINT(source, options, predef);
     this.results = JSHINT.data();
+    console.log(this.results);
     console.log(this.results.errors);
-    this.setState({auth: true});
+
+    let totalErrors = this.results.errors.length;
+    let errors = "";
+    this.results.errors.forEach(er => {
+      errors += ` Error: ${er.reason} Line:${er.line}\n`;
+    });
+
+    this.resultInput.current.refEditor.innerText = `Total Errors:${totalErrors}`;
+    this.resultInput.current.refEditor.innerText += `\n${errors}`;
+
   }
 
   render() {
     return (
-      <Row>
+      <Row className={"app"}>
         <Col>
           <AceEditor
+            ref={this.textInput}
             mode="javascript"
             theme="monokai"
             onChange={this.onChange.bind(this)}
@@ -57,24 +67,20 @@ class app extends Component {
           />
         </Col>
         <Col>
-          <Button variant={"outline-primary"} onClick={this.sendData.bind(this)} size={"sm"}>
-            Click
-          </Button>
-        </Col>
-        <Col className={"alert-primary"}>
-          {this.state.auth === true ? (
-            <div>
-              {`${this.results.errors.length} Errors`}
-              {this.results.errors.map(el => {
-                return <p>Line:{el.line} Error:{el.reason}</p>
-              })
-              }
-            </div>
-          ) : null}
+          <AceEditor
+            ref={this.resultInput}
+            mode="javascript"
+            theme="monokai"
+            defaultValue={"//hello"}
+            showGutter={false}
+            readOnly={true}
+            name="RESULTS"
+            editorProps={{$blockScrolling: true}}
+          />
         </Col>
       </Row>
     );
   }
 }
 
-export default app;
+export default Editor;
