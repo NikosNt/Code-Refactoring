@@ -2,7 +2,7 @@ import React, {Component} from "react";
 import Editor from "./Editor";
 import Split from "./Split";
 
-class app extends Component {
+class App extends Component {
   render() {
     return (
       <Split/>
@@ -10,4 +10,4 @@ class app extends Component {
   }
 }
 
-export default app;
+export default App;
