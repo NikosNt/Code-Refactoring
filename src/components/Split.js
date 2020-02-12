@@ -21,22 +21,21 @@ class Split extends Component {
         undef: true,
         unused: true,
         strict: false,
-        varstmt: true,// vale auto
+        varstmt: true, 
         node: true,
         browser: true,
         jquery: true 
       },
       data:
-        "//My solution before research\n" +
         "function digital_root(n) {\n" +
-        "    while (n > 9) {// while n is greater than 9\n" +
-        "        let sum = 0;// place to store the sum\n" +
-        "        while (n > 0) { // while n is greater than 0\n" +
-        "            const lastDigit = n % 10;// mod the number by 10 to get last digit\n" +
-        "            n = Math.floor(n / 10);// take math.floor of number divided by 10 to drop off last digit\n" +
-        "            sum += lastDigit;// add last digit to sum\n" +
+        "    while (n > 9) {\n" +
+        "        let sum = 0;\n" +
+        "        while (n > 0) {\n" +
+        "            const lastDigit = n % 10;\n" +
+        "            n = Math.floor(n / 10);\n" +
+        "            sum += lastDigit;\n" +
         "        }\n" +
-        "        n = sum;// re-assign sum to n\n" +
+        "        n = sum;\n" +
         "    }\n" +
         "    return n;\n" +
         "}"
@@ -175,24 +174,29 @@ class Split extends Component {
       <div>
         <Row >
 
-          <Col>
-            <Col  md={2}>
-              <Button    onClick={this.handleEqeqeq.bind(this)} >=== : {this.state.options.eqeqeq.toString()}</Button>
+          <Col  md={2}>
+            <Col >
+              <Row> <Col > <Button  onClick={this.handleEqeqeq.bind(this)} >=== </Button> </Col> <Col><p>  {this.state.options.eqeqeq.toString()  }</p> </Col></Row>
             </Col>
             <Col>
-              <a onClick={this.handleStrict.bind(this)}>strict : {this.state.options.strict.toString()}</a>
+              <Row> <Col > <Button  onClick={this.handleStrict.bind(this)} >strict </Button> </Col> <Col><p>  {this.state.options.strict.toString()   }</p> </Col></Row>
+              {/* <a onClick={this.handleStrict.bind(this)}>strict : {this.state.options.strict.toString()}</a> */}
             </Col>
             <Col>
-              <a onClick={this.handleNode.bind(this)}>node : {this.state.options.node.toString()}</a>
+            <Row> <Col > <Button  onClick={this.handleNode.bind(this)} >node </Button> </Col> <Col><p>  {this.state.options.node.toString()   }</p> </Col></Row>
+              {/* <a onClick={this.handleNode.bind(this)}>node  {this.state.options.node.toString()}</a> */}
             </Col>
             <Col>
-              <a onClick={this.handleBrowser.bind(this)}>browser : {this.state.options.browser.toString()}</a>
+            <Row> <Col > <Button  onClick={this.handleBrowser.bind(this)} >browser </Button> </Col> <Col><p>  {this.state.options.browser.toString()   }</p> </Col></Row>
+              {/* <a onClick={this.handleBrowser.bind(this)}>browser  {this.state.options.browser.toString()}</a> */}
             </Col>
             <Col>
-              <a onClick={this.handleJQuery.bind(this)}>jquery : {this.state.options.jquery.toString()}</a>
+            <Row> <Col > <Button  onClick={this.handleJQuery.bind(this)} >jquery </Button> </Col> <Col><p>  {this.state.options.jquery.toString()   }</p> </Col></Row>
+              {/* <a onClick={this.handleJQuery.bind(this)}>jquery  {this.state.options.jquery.toString()}</a> */}
             </Col>
             <Col>
-              <a onClick={this.handleVarstmt.bind(this)}>varstmt : {this.state.options.varstmt.toString()}</a>
+            <Row> <Col > <Button  onClick={this.handleVarstmt.bind(this)} >varstmt </Button> </Col> <Col><p>  {this.state.options.varstmt.toString()   }</p> </Col></Row>
+              {/* <a onClick={this.handleVarstmt.bind(this)}>varstmt  {this.state.options.varstmt.toString()}</a> */}
             </Col>
           </Col>
           <Col   md={10}>
@@ -204,7 +208,7 @@ class Split extends Component {
               splits={2}
               orientation="beside"
               width={"100%"}
-              height={window.innerHeight - 30}
+             // height={window.innerHeight - 30}
               value={[this.state.data, " "]}
               name="UNIQUE_ID_OF_DIV"
               onChange={this.handleChange.bind(this)}
