@@ -8,6 +8,9 @@ import {Button, Col, Row} from "react-bootstrap";
 
 import "../styles/split.css"
 
+import { IoIosCheckmark,IoIosClose } from "react-icons/io";
+import { TiCancel} from "react-icons/ti";
+
 class Split extends Component {
   constructor(props) {
     super(props);
@@ -20,7 +23,7 @@ class Split extends Component {
         maxparams: 3,
         undef: true,
         unused: true,
-        strict: false,
+        strict: true,
         varstmt: true, 
         node: true,
         browser: true,
@@ -37,6 +40,7 @@ class Split extends Component {
         "        }\n" +
         "        n = sum;\n" +
         "    }\n" +
+        "    console.log(n);\n" +        
         "    return n;\n" +
         "}"
     };
@@ -88,7 +92,7 @@ class Split extends Component {
             this.editor.current.refEditor.children[7].innerText += `\nMax function complexity:${this.maxComplexity(this.results)}`;
             this.editor.current.refEditor.children[7].innerText += `\nMax function parameters:${this.maxParams(this.results)}`;
           }
-          this.editor.current.refEditor.children[7].innerText += `\nTotal Errors:${totalErrors}`;
+          this.editor.current.refEditor.children[7].innerText += `\n\nTotal Errors:${totalErrors}`;
           this.editor.current.refEditor.children[7].innerText += `\n${errors}`;
         }
       }
@@ -169,37 +173,35 @@ class Split extends Component {
     });
     this.sendData();
   }
+
+ 
+
   render() {
     return (
       <div>
         <Row >
-
-          <Col  md={2}>
+ 
+          <Col md={2}>
             <Col >
-              <Row> <Col > <Button  onClick={this.handleEqeqeq.bind(this)} >=== </Button> </Col> <Col><p>  {this.state.options.eqeqeq.toString()  }</p> </Col></Row>
+             <Row> <Col > <Button  onClick={this.handleEqeqeq.bind(this)} > === </Button> </Col> <Col><p>  {this.state.options.eqeqeq  === true ? <IoIosCheckmark  size={'2em'} />:<IoIosClose size={'2em'} />    } </p> </Col></Row>
             </Col>
             <Col>
-              <Row> <Col > <Button  onClick={this.handleStrict.bind(this)} >strict </Button> </Col> <Col><p>  {this.state.options.strict.toString()   }</p> </Col></Row>
-              {/* <a onClick={this.handleStrict.bind(this)}>strict : {this.state.options.strict.toString()}</a> */}
+              <Row> <Col > <Button  onClick={this.handleStrict.bind(this)} >strict </Button> </Col> <Col><p>  {this.state.options.strict === true ? <IoIosCheckmark  size={'2em'} />:<IoIosClose size={'2em'} />    }</p> </Col></Row>
             </Col>
             <Col>
-            <Row> <Col > <Button  onClick={this.handleNode.bind(this)} >node </Button> </Col> <Col><p>  {this.state.options.node.toString()   }</p> </Col></Row>
-              {/* <a onClick={this.handleNode.bind(this)}>node  {this.state.options.node.toString()}</a> */}
+            <Row> <Col > <Button  onClick={this.handleNode.bind(this)} >node </Button> </Col> <Col><p>  {this.state.options.node  === true ? <IoIosCheckmark  size={'2em'} />:<IoIosClose size={'2em'} />    }</p> </Col></Row>
             </Col>
             <Col>
-            <Row> <Col > <Button  onClick={this.handleBrowser.bind(this)} >browser </Button> </Col> <Col><p>  {this.state.options.browser.toString()   }</p> </Col></Row>
-              {/* <a onClick={this.handleBrowser.bind(this)}>browser  {this.state.options.browser.toString()}</a> */}
+            <Row> <Col > <Button  onClick={this.handleBrowser.bind(this)} >browser </Button> </Col> <Col><p>  {this.state.options.browser  === true ? <IoIosCheckmark  size={'2em'} />:<IoIosClose size={'2em'} />    }</p> </Col></Row>
             </Col>
             <Col>
-            <Row> <Col > <Button  onClick={this.handleJQuery.bind(this)} >jquery </Button> </Col> <Col><p>  {this.state.options.jquery.toString()   }</p> </Col></Row>
-              {/* <a onClick={this.handleJQuery.bind(this)}>jquery  {this.state.options.jquery.toString()}</a> */}
+            <Row> <Col > <Button  onClick={this.handleJQuery.bind(this)} >jquery </Button> </Col> <Col><p>  {this.state.options.jquery  === true ? <IoIosCheckmark  size={'2em'} />:<IoIosClose size={'2em'} />}</p> </Col></Row>
             </Col>
             <Col>
-            <Row> <Col > <Button  onClick={this.handleVarstmt.bind(this)} >varstmt </Button> </Col> <Col><p>  {this.state.options.varstmt.toString()   }</p> </Col></Row>
-              {/* <a onClick={this.handleVarstmt.bind(this)}>varstmt  {this.state.options.varstmt.toString()}</a> */}
+            <Row> <Col > <Button  onClick={this.handleVarstmt.bind(this)} >varstmt </Button> </Col> <Col><p>  {this.state.options.varstmt  === true ? <IoIosCheckmark  size={'2em'} />:<IoIosClose size={'2em'} /> }</p> </Col></Row>
             </Col>
           </Col>
-          <Col   md={10}>
+          <Col md={10}>
             <SplitEditor
               ref={this.editor}
               mode="javascript"
